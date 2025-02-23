@@ -1,0 +1,36 @@
+spring:
+  logging:
+    config: classpath:logback.xml
+
+news-to-kafka-service:
+  news-api-bearerToken: f95ef4d1281d481397db2c1477092d7e
+  news-api-streamUrl: https://newsapi.org/v2/everything
+  news-keyword: software
+
+retry-config:
+  initial-interval-ms: 1000 # 1 second
+  max-interval-ms: 10000 # 10 seconds
+  multiplier: 2.0 # exponential backoff
+  max-attempts: 3 # 3 attempts
+  sleep-time-ms: 2000 # 2 seconds sleep time
+
+kafka-config:
+  bootstrap-servers: localhost:19092, localhost:29092, localhost:39092
+  schema-registry-url-key: schema.registry.url
+  schema-registry-url: http://localhost:8081
+  topic-name: news-topic
+  topic-names-to-create:
+    - news-topic
+  num-of-partitions: 3 # 3 partitions
+  replication-factor: 3 # 3 brokers
+
+kafka-producer-config:
+  key-serializer-class: org.apache.kafka.common.serialization.LongSerializer
+  value-serializer-class: io.confluent.kafka.serializers.KafkaAvroSerializer
+  compression-type: snappy # best compression ratio
+  acks: all # all replicas must acknowledge
+  batch-size: 16384 # 16 KB
+  batch-size-boost-size: 100 # 100 bytes
+  linger-ms: 5 # 5 milliseconds
+  request-timeout-ms: 60000 # 1 minute
+  retry-count: 5 # number of retries
