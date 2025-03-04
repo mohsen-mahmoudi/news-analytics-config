@@ -35,3 +35,9 @@ kafka-consumer-config:
   max-partition-fetch-bytes-default: 1048576 # means that the consumer will fetch 1 MB of data from each partition
   max-partition-fetch-bytes-boost-factor: 1
   poll-timeout-ms: 300 # means that the consumer will wait for 300 milliseconds for records
+
+elastic-config:
+  index-name: news-index
+  connection-url: http://localhost:9200
+  connection-timeout-ms: 5000
+  socket-timeout-ms: 30000
