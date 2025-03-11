@@ -12,3 +12,8 @@ elastic-config:
 
 elastic-query-config:
   field: text
+
+user-config:
+    username: user
+    password: password
+    roles: USER
