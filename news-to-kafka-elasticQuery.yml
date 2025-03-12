@@ -25,4 +25,4 @@ spring-doc:
     path: /swagger-ui.html
 
 security:
-  path-to-ignore: /api-docs
+  path-to-ignore: /api-docs/**,/swagger-ui/**
