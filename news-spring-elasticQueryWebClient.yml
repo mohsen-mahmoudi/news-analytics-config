@@ -1,0 +1,21 @@
+server:
+  port: 8183
+  servlet:
+    context-path: /elastic-query-web-client
+
+spring:
+  thymeleaf:
+    cache: false # disable cache during development
+
+elastic-query-web-client-service-config:
+  webclient:
+    connection-timeout-ms: 10000
+    read-timeout-ms: 30000
+    write-timeout-ms: 30000
+    max-in-memory-size: 10MB
+    base-url: 'http://elastic-query-service/elastic-query/documents'
+
+user-config:
+    username: user
+    password: password
+    roles: USER
