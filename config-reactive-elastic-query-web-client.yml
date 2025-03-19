@@ -1,0 +1,28 @@
+server:
+  port: 8183
+
+spring:
+  webflux:
+    base-path: /reactive-elastic-query-web-client
+  codec:
+    max-in-memory-size: 25MB
+  thymeleaf:
+    cache: false # disable cache during development
+    reactive:
+      max-chunk-size: 8192 # 8KB
+
+elastic-query-web-client-service-config:
+  webclient:
+    connection-timeout-ms: 10000
+    read-timeout-ms: 30000
+    write-timeout-ms: 30000
+    max-in-memory-size: 10MB
+    base-url: 'http://localhost:8182/elastic-query/documents'
+  query-by-text:
+    method: POST
+    url: "/get-document-by-value"
+
+user-config:
+  username: user
+  password: password
+  roles: USER
