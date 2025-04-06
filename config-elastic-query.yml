@@ -3,6 +3,14 @@ server:
   servlet:
     context-path: /elastic-query
 
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8189/auth/realms/microservices_realm
+          jwt-set-uri: http://localhost:8189/auth/realms/microservices_realm/protocol/openid-connect/certs
+
 elastic-config:
   index-name: news-index
   connection-url: http://localhost:9200
