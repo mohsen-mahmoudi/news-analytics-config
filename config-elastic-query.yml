@@ -21,6 +21,9 @@ elastic-config:
 elastic-query-config:
   field: text
 
+elastic-query-service-config:
+  custom-audience: elastic-query-service
+
 user-config:
     username: user
     password: password
