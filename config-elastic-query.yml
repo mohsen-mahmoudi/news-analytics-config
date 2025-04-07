@@ -9,7 +9,7 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8189/auth/realms/microservices_realm
-          jwt-set-uri: http://localhost:8189/auth/realms/microservices_realm/protocol/openid-connect/certs
+          jwk-set-uri: http://localhost:8189/auth/realms/microservices_realm/protocol/openid-connect/certs
           audience: elastic-query-service
   jpa:
     open-in-view: false
