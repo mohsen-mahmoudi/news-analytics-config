@@ -11,6 +11,7 @@ spring:
           issuer-uri: http://localhost:8189/auth/realms/microservices_realm
           jwk-set-uri: http://localhost:8189/auth/realms/microservices_realm/protocol/openid-connect/certs
           audience: elastic-query-service
+
   jpa:
     open-in-view: false
     show-sql: true
@@ -20,14 +21,18 @@ spring:
     properties:
       hibernate:
         default_schema: public
+
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=public&binaryTransform=true&reWriteBatchInserts=true
     username: admin
     password: 123
     driver-class-name: org.postgresql.Driver
-    initialization-mode: always
-    schema: classpath:init-schema.sql
-    data: classpath:init-data.sql
+
+  sql:
+    init:
+      schema-locations: classpath:init-schema.sql
+      data-locations: classpath:init-data.sql
+      mode: always
 
 elastic-config:
   index-name: news-index
