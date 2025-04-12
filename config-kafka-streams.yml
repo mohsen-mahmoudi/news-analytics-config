@@ -1,0 +1,51 @@
+server:
+  port: 8184
+  servlet:
+    context-path: /kafka-streams
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8189/auth/realms/microservices_realm
+          jwk-set-uri: http://localhost:8189/auth/realms/microservices_realm/protocol/openid-connect/certs
+          audience: kafka-streams-service
+
+user-config:
+    username: user
+    password: password
+    roles: USER
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+security:
+  path-to-ignore: /api-docs/**
+
+retry-config:
+  initial-interval-ms: 1000 # 1 second
+  max-interval-ms: 10000 # 10 seconds
+  multiplier: 2.0 # exponential backoff
+  max-attempts: 3 # 3 attempts
+  sleep-time-ms: 2000 # 2 seconds sleep time
+
+kafka-config:
+  bootstrap-servers: localhost:19092, localhost:29092, localhost:39092
+  schema-registry-url-key: schema.registry.url
+  schema-registry-url: http://localhost:8190
+  topic-name: news-topic
+  topic-names-to-create:
+    - news-topic
+    - news-analytics-topic
+
+kafka-streams-config:
+  custom-audience: kafka-streams-service
+  application-id: kafka-streams-application
+  input-topic-name: news-topic
+  output-topic-name: news-analytics-topic
+  state-file-location: ${HOME}/kafka-streaming-state
+  word-count-store-name: word-count-store

@@ -20,6 +20,7 @@ kafka-config:
   topic-name: news-topic
   topic-names-to-create:
     - news-topic
+    - news-analytics-topic
   num-of-partitions: 3 # 3 partitions
   replication-factor: 3 # 3 brokers
 
