@@ -41,6 +41,8 @@ kafka-config:
   topic-names-to-create:
     - news-topic
     - news-analytics-topic
+  num-of-partitions: 3
+  replication-factor: 3
 
 kafka-streams-config:
   custom-audience: kafka-streams-service
