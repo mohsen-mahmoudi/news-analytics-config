@@ -45,7 +45,7 @@ kafka-config:
   replication-factor: 3
 
 kafka-streams-config:
-  custom-audience: kafka-streams-service
+  custom-audience: kafka-stream-service
   application-id: kafka-streams-application
   input-topic-name: news-topic
   output-topic-name: news-analytics-topic
