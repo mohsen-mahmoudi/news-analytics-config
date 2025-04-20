@@ -16,10 +16,11 @@ spring:
           keycloak:
             client-id: 'elastic-query-service'
             client-secret: '8e7670ea-04f4-4e41-8738-8d114e1e67c2'
-            authorization-grant-type: client_credential
+            authorization-grant-type: client_credentials
         provider:
           keycloak:
             issuer-uri: http://localhost:8189/auth/realms/microservices_realm
+            token-uri: http://localhost:8189/auth/realms/microservices_realm/protocol/openid-connect/token
 
   jpa:
     open-in-view: false
