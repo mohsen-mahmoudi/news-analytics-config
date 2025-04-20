@@ -19,7 +19,7 @@ spring:
             authorization-grant-type: client_credential
         provider:
           keycloak:
-            tokenUri: http://localhost:8189/auth/realms/microservices_realm/protocol/openid-connect/token
+            issuer-uri: http://localhost:8189/auth/realms/microservices_realm
 
   jpa:
     open-in-view: false
