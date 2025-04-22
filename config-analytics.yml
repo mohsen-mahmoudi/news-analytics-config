@@ -36,6 +36,13 @@ spring:
 analytics-config:
   custom-audience: elastic-query-service
 
+retry-config:
+  initial-interval-ms: 1000 # 1 second
+  max-interval-ms: 10000 # 10 seconds
+  multiplier: 2.0 # exponential backoff
+  max-attempts: 3 # 3 attempts
+  sleep-time-ms: 2000 # 2 seconds sleep time
+
 kafka-config:
   bootstrap-servers: localhost:19092, localhost:29092, localhost:39092
   schema-registry-url-key: schema.registry.url
