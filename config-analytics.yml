@@ -55,7 +55,7 @@ kafka-config:
   replication-factor: 3
 
 kafka-consumer-config:
-  key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
+  key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
   value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
   consumer-group-id: news-topic-consumer
   auto-offset-reset: earliest # start from the beginning of the topic
