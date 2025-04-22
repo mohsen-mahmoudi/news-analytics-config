@@ -61,10 +61,14 @@ elastic-query-service-config:
     read-timeout-ms: 30000
     write-timeout-ms: 30000
     max-in-memory-size: 10MB
-    query-type: 'KAFKA_STATE_STORE'
+    #query-type: 'KAFKA_STATE_STORE'
+    query-type: 'ANALYTICS_DATABASE'
   query-from-kafka-state-store:
     method: GET
     url: "http://localhost:8184/kafka-streams/get-word-count-by-word/{word}"
+  query-from-analytics-database:
+    method: GET
+    url: "http://localhost:8185/analytics/get-word-count-by-word/{word}"
 
 user-config:
     username: user

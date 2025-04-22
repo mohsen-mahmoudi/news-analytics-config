@@ -1,0 +1,80 @@
+server:
+  port: 8185
+  servlet:
+    context-path: /analytics
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8189/auth/realms/microservices_realm
+          jwk-set-uri: http://localhost:8189/auth/realms/microservices_realm/protocol/openid-connect/certs
+          audience: elastic-query-service
+
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none # Important when using schema.sql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        default_schema: analytics
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=analytics&binaryTransform=true&reWriteBatchInserts=true
+    username: admin
+    password: 123
+    driver-class-name: org.postgresql.Driver
+
+  sql:
+    init:
+      schema-locations: classpath:init-schema.sql
+      mode: always
+
+analytics-config:
+  custom-audience: elastic-query-service
+
+kafka-config:
+  bootstrap-servers: localhost:19092, localhost:29092, localhost:39092
+  schema-registry-url-key: schema.registry.url
+  schema-registry-url: http://localhost:8190
+  topic-name: news-topic
+  topic-names-to-create:
+    - news-topic
+    - news-analytics-topic
+  num-of-partitions: 3
+  replication-factor: 3
+
+kafka-consumer-config:
+  key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
+  value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+  consumer-group-id: news-topic-consumer
+  auto-offset-reset: earliest # start from the beginning of the topic
+  specific-avro-reader-key: specific.avro.reader
+  specific-avro-reader: true
+  batch-listener: true # means that the listener will receive a list of records
+  auto-startup: false # don't start the consumer automatically
+  concurrency-level: 3 # means that 3 threads will be used to consume records
+  session-timeout-ms: 10000 # means that the consumer will be considered dead after 10 seconds
+  heartbeat-interval-ms: 3000 # means that the consumer will send a heartbeat every 3 seconds
+  max-poll-interval-ms: 300000 # means that the consumer will be considered dead if it doesn't poll for 5 minutes
+  max-poll-records: 500 # means that the consumer will poll for 500 records at a time
+  max-partition-fetch-bytes-default: 1048576 # means that the consumer will fetch 1 MB of data from each partition
+  max-partition-fetch-bytes-boost-factor: 1
+  poll-timeout-ms: 300 # means that the consumer will wait for 300 milliseconds for records
+
+user-config:
+    username: user
+    password: password
+    roles: USER
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+security:
+  path-to-ignore: /api-docs/**
