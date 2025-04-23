@@ -65,10 +65,10 @@ elastic-query-service-config:
     query-type: 'ANALYTICS_DATABASE'
   query-from-kafka-state-store:
     method: GET
-    url: "http://localhost:8184/kafka-streams/get-word-count-by-word/{word}"
+    url: "http://kafka-streams-service/kafka-streams/get-word-count-by-word/{word}"
   query-from-analytics-database:
     method: GET
-    url: "http://localhost:8185/analytics/get-word-count-by-word/{word}"
+    url: "http://analytics-service/analytics/get-word-count-by-word/{word}"
 
 user-config:
     username: user
