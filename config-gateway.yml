@@ -1,0 +1,72 @@
+server:
+  port: 8186
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
+      routes:
+        - id: elastic-query-service
+          uri: lb://elastic-query-service
+          predicates:
+            - Path=/elastic-query/**
+          filters:
+            - RewritePath=/elastic-query/(?<path>.*), /${path}
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenish-rate: 10
+                redis-rate-limiter.burst-capacity: 20
+                key-resolver: "#{@authHeaderResolver}"
+            - name: CircuitBreaker
+              args:
+                name: elasticQueryServiceCircuitBreaker
+                fallbackUri: forward:/fallback/elastic-query-fallback
+
+        - id: analytics-service
+          uri: lb://analytics-service
+          predicates:
+            - Path=/analytics/**
+          filters:
+            - RewritePath=/analytics/(?<path>.*), /${path}
+            - name: RequestRateLimiter
+            - args:
+                redis-rate-limiter.replenish-rate: 10
+                redis-rate-limiter.burst-capacity: 20
+                key-resolver: "#{@authHeaderResolver}"
+            - name: CircuitBreaker
+            - args:
+                name: analyticsServiceCircuitBreaker
+                fallbackUri: forward:/fallback/analytics-fallback
+
+        - id: kafka-streams-service
+          uri: lb://kafka-streams-service
+          predicates:
+            - Path=/kafka-streams/**
+          filters:
+            - RewritePath=/kafka-streams/(?<path>.*), /${path}
+            - name: RequestRateLimiter
+            - args:
+                redis-rate-limiter.replenish-rate: 10
+                redis-rate-limiter.burst-capacity: 20
+                key-resolver: "#{@authHeaderResolver}"
+            - name: CircuitBreaker
+            - args:
+                name: kafkaStreamsServiceCircuitBreaker
+                fallbackUri: forward:/fallback/kafka-streams-fallback
+
+  redis:
+    host: localhost
+    port: 6379
+
+gateway-config:
+  timeout-ms: 3000
+  failure-threshold: 50
+  show-call-rate-threshold: 50
+  show-call-duration-threshold: 50
+  permitted-num-of-call-in-half-open-state: 10
+  sliding-window-size: 10
+  min-num-of-calls: 10
+  wait-duration-in-open-state: 60000 # 60 seconds
